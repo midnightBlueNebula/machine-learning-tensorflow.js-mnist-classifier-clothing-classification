@@ -1,1 +1,1 @@
-# machine-learning-tensorflow.js-mnist-classifier-clothing-classification
+Multi-Layered Perceptron for Classification: Classifying Clothing.
