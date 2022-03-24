@@ -16,7 +16,7 @@ const OUTPUTS = TRAINING_DATA.outputs;
 
 tf.util.shuffleCombo(INPUTS, OUTPUTS);
 
-const INPUTS_TENSOR = tf.tensor2d(INPUTS);
+const INPUTS_TENSOR = normalize(tf.tensor2d(INPUTS), 0, 255);
 
 const OUTPUTS_TENSOR = tf.oneHot(tf.tensor1d(OUTPUTS, 'int32'), 10);
 
@@ -33,6 +33,26 @@ model.add(tf.layers.dense({units: 10, activation: 'softmax'}));
 model.summary();
 
 train();
+
+
+function normalize(tensor, min, max) {
+
+  const result = tf.tidy(function() {
+    
+    const MIN_VALUES = min || tf.min(tensor, 0);
+    const MAX_VALUES = max || tf.max(tensor, 0);
+
+    const TENSOR_SUBTRACT_MIN_VALUE = tf.sub(tensor, MIN_VALUES);
+    const RANGE_SIZE = tf.sub(MAX_VALUES, MIN_VALUES);
+    const NORMALIZED_VALUES = tf.div(TENSOR_SUBTRACT_MIN_VALUE, RANGE_SIZE);
+
+    return NORMALIZED_VALUES;
+
+  });
+
+  return result;
+
+}
 
 
 async function train() { 
