@@ -16,11 +16,7 @@ const OUTPUTS = TRAINING_DATA.outputs;
 
 tf.util.shuffleCombo(INPUTS, OUTPUTS);
 
-// Input feature Array is 1 dimensional.
-
 const INPUTS_TENSOR = tf.tensor2d(INPUTS);
-
-// Output feature Array is 1 dimensional.
 
 const OUTPUTS_TENSOR = tf.oneHot(tf.tensor1d(OUTPUTS, 'int32'), 10);
 
